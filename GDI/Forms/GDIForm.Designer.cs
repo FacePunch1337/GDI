@@ -39,12 +39,12 @@ namespace GDI
             this.labelGameOver = new System.Windows.Forms.Label();
             this.pictureRestart = new System.Windows.Forms.PictureBox();
             this.pictureQuit = new System.Windows.Forms.PictureBox();
-            this.picturePause = new System.Windows.Forms.PictureBox();
+            this.picturePauseResume = new System.Windows.Forms.PictureBox();
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.timerBallSpawn = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureRestart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureQuit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePauseResume)).BeginInit();
             this.panelDisplay.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +63,7 @@ namespace GDI
             this.labelBallCoord.Size = new System.Drawing.Size(25, 13);
             this.labelBallCoord.TabIndex = 0;
             this.labelBallCoord.Text = "0.0";
+            this.labelBallCoord.Visible = false;
             // 
             // labelMouseCoord
             // 
@@ -74,6 +75,7 @@ namespace GDI
             this.labelMouseCoord.Size = new System.Drawing.Size(25, 13);
             this.labelMouseCoord.TabIndex = 1;
             this.labelMouseCoord.Text = "0.0";
+            this.labelMouseCoord.Visible = false;
             // 
             // labelTimer
             // 
@@ -146,20 +148,20 @@ namespace GDI
             this.pictureQuit.TabStop = false;
             this.pictureQuit.Click += new System.EventHandler(this.pictureQuit_Click);
             // 
-            // picturePause
+            // picturePauseResume
             // 
-            this.picturePause.Location = new System.Drawing.Point(214, 3);
-            this.picturePause.Name = "picturePause";
-            this.picturePause.Size = new System.Drawing.Size(32, 31);
-            this.picturePause.TabIndex = 8;
-            this.picturePause.TabStop = false;
-            this.picturePause.Click += new System.EventHandler(this.picturePause_Click);
+            this.picturePauseResume.Location = new System.Drawing.Point(214, 3);
+            this.picturePauseResume.Name = "picturePauseResume";
+            this.picturePauseResume.Size = new System.Drawing.Size(32, 31);
+            this.picturePauseResume.TabIndex = 8;
+            this.picturePauseResume.TabStop = false;
+            this.picturePauseResume.Click += new System.EventHandler(this.picturePauseResume_Click);
             // 
             // panelDisplay
             // 
             this.panelDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDisplay.Controls.Add(this.labelTimer);
-            this.panelDisplay.Controls.Add(this.picturePause);
+            this.panelDisplay.Controls.Add(this.picturePauseResume);
             this.panelDisplay.Controls.Add(this.labelScore);
             this.panelDisplay.Controls.Add(this.labelMissed);
             this.panelDisplay.Location = new System.Drawing.Point(2, 8);
@@ -196,7 +198,7 @@ namespace GDI
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GDIForm_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.pictureRestart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureQuit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePauseResume)).EndInit();
             this.panelDisplay.ResumeLayout(false);
             this.panelDisplay.PerformLayout();
             this.ResumeLayout(false);
@@ -205,8 +207,6 @@ namespace GDI
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label labelBallCoord;
         private System.Windows.Forms.Label labelMouseCoord;
         private System.Windows.Forms.Label labelTimer;
@@ -215,8 +215,9 @@ namespace GDI
         private System.Windows.Forms.Label labelGameOver;
         private System.Windows.Forms.PictureBox pictureRestart;
         private System.Windows.Forms.PictureBox pictureQuit;
-        private System.Windows.Forms.PictureBox picturePause;
+        private System.Windows.Forms.PictureBox picturePauseResume;
         private System.Windows.Forms.Panel panelDisplay;
         private System.Windows.Forms.Timer timerBallSpawn;
+        private System.Windows.Forms.Timer timer;
     }
 }

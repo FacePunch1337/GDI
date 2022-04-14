@@ -95,8 +95,14 @@ namespace GDI
         private List<Ball> balls = new List<Ball>();
         private RocketMoveDirections rocketMove = RocketMoveDirections.None;
         private Rocket rocket;
+        private int timeMs;
+        private int seconds;
+        private int minutes;
+        private int hours;
+
         private int score;
         private int missed;
+        
         
         
         
@@ -310,6 +316,15 @@ namespace GDI
             {
                 rocketMove = RocketMoveDirections.Right;
             }
+            if (e.KeyCode == Keys.Space)
+            {
+                picturePauseResumeMethod();
+            }
+           
+            if (e.KeyCode == Keys.Oemplus)
+            {
+                SpawnBall();
+            }
         }
 
         private void GDIForm_KeyUp(object sender, KeyEventArgs e)
@@ -328,22 +343,20 @@ namespace GDI
         {
             if (balls.Count > 0)
             {
-                labelBallCoord.Text = $"{balls[0].PositionX}.{balls[0].PositionY}";
-                
+                timeMs += timer.Interval;  // Add interval to real time
+                int timeS = timeMs / 10;
+                hours = timeS / 3600;
+                minutes = (timeS % 3600) / 60;
+                seconds = timeS % 60;
+
+                labelTimer.Text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
             }
             else
             {
-                timer.Stop();
-                timerBallSpawn.Stop();
-                labelGameOver.Visible = true;
-                pictureQuit.Enabled = true;
-                pictureQuit.Visible = true;
-                pictureRestart.Enabled = true;
-                pictureRestart.Visible = true;
-
+                GameOver();
             }
 
-            picturePause.Image = Image.FromFile("icons-pause.bmp");
+            picturePauseResume.Image = Image.FromFile("icons-pause.bmp");
             Score();
             Invalidate();
         }
@@ -372,8 +385,8 @@ namespace GDI
                     W = 20,
                     H = 20,
 
-                    Vx = random.Next(1, 10),
-                    Vy = random.Next(1, 10),
+                    Vx = random.Next(5, 10),
+                    Vy = random.Next(5, 10),
 
                     clearBrush = new SolidBrush(form.BackColor),
                     ballBrush = new SolidBrush(Color.Tomato),
@@ -397,6 +410,8 @@ namespace GDI
         //Метод загрузки игры
         private void GameLoad()
         {
+            
+            timer.Start();
             timerBallSpawn.Start();
             labelGameOver.Visible = false;
             pictureRestart.Visible = false;
@@ -404,33 +419,63 @@ namespace GDI
             pictureQuit.Visible = false;
             pictureQuit.Enabled = false;
 
-            score = 0;
-            missed = 0;
-
             pictureRestart.Image = Image.FromFile("icons-restart.bmp");
             pictureQuit.Image = Image.FromFile("icons-quit.bmp");
 
             SpawnBall(1);
-            timer.Start();
+            
         }
 
+        private void GameOver()
+        {
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            labelTimer.Text = $"0{hours}:0{minutes}:0{seconds}";
+
+            score = 0;
+            missed = 0;
+            timer.Stop();
+            timerBallSpawn.Stop();
+            
+            labelGameOver.Visible = true;
+            pictureQuit.Enabled = true;
+            pictureQuit.Visible = true;
+            pictureRestart.Enabled = true;
+            pictureRestart.Visible = true;
+            
+
+
+        }
+
+        
+
+       
         //Событие таймера на спавн шариков
         private void timerBallSpawn_Tick(object sender, EventArgs e)
         {
             SpawnBall();
         }
 
-
-
-        private void picturePause_Click(object sender, EventArgs e)
+        private void pictureRestart_Click(object sender, EventArgs e)
         {
+            GameLoad();
 
+        }
 
+        private void picturePauseResume_Click(object sender, EventArgs e)
+        {
+            picturePauseResumeMethod();
+        }
+
+        private void picturePauseResumeMethod()
+        {
             if (pause == false)
             {
                 pause = true;
                 timer.Stop();
-                picturePause.Image = Image.FromFile("icons-resume.bmp");
+                timerBallSpawn.Stop();
+                picturePauseResume.Image = Image.FromFile("icons-resume.bmp");
 
 
             }
@@ -438,17 +483,34 @@ namespace GDI
             {
                 pause = false;
                 timer.Start();
-                picturePause.Image = Image.FromFile("icons-pause.bmp");
+                timerBallSpawn.Start();
+                picturePauseResume.Image = Image.FromFile("icons-pause.bmp");
+            }
+        }
+
+        /*private void ClearAll()
+        {
+            
+            Ball toRemove = null;
+            
+            foreach (Ball ball in balls)
+            {
+                toRemove = ball;
+            }
+            if (toRemove != null)
+            {
+                balls.Remove(toRemove);
+
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
+                labelTimer.Text = $"0{hours}:0{minutes}:0{seconds}";
+
+                score = 0;
+                missed = 0;
             }
 
-
-
-        }
-
-        private void pictureRestart_Click(object sender, EventArgs e)
-        {
-            GameLoad();
-        }
+        }*/
 
         private void pictureQuit_Click(object sender, EventArgs e)
         {
