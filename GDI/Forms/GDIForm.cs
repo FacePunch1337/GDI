@@ -320,11 +320,18 @@ namespace GDI
             {
                 picturePauseResumeMethod();
             }
-           
+
+            if (e.KeyCode == Keys.R)
+            {
+                GameLoad();
+            }
+
             if (e.KeyCode == Keys.Oemplus)
             {
                 SpawnBall();
             }
+
+
         }
 
         private void GDIForm_KeyUp(object sender, KeyEventArgs e)
@@ -410,7 +417,16 @@ namespace GDI
         //Метод загрузки игры
         private void GameLoad()
         {
-            
+            ClearAll();
+            timeMs = 0;
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            labelTimer.Text = $"0{hours}:0{minutes}:0{seconds}";
+
+            score = 0;
+            missed = 0;
+
             timer.Start();
             timerBallSpawn.Start();
             labelGameOver.Visible = false;
@@ -428,13 +444,7 @@ namespace GDI
 
         private void GameOver()
         {
-            hours = 0;
-            minutes = 0;
-            seconds = 0;
-            labelTimer.Text = $"0{hours}:0{minutes}:0{seconds}";
-
-            score = 0;
-            missed = 0;
+           
             timer.Stop();
             timerBallSpawn.Stop();
             
@@ -488,7 +498,7 @@ namespace GDI
             }
         }
 
-        /*private void ClearAll()
+        private void ClearAll()
         {
             
             Ball toRemove = null;
@@ -510,7 +520,7 @@ namespace GDI
                 missed = 0;
             }
 
-        }*/
+        }
 
         private void pictureQuit_Click(object sender, EventArgs e)
         {

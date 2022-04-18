@@ -16,7 +16,7 @@ namespace GDI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GDIForm());
+            Application.Run(new Forms.ProcessForm());
         }
     }
 }
